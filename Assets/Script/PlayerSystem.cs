@@ -22,8 +22,25 @@ public class PlayerSystem : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        axisX = moveAction.ReadValue<Vector2>().x;
-        axisY = moveAction.ReadValue<Vector2>().y;
+        if (axisY == 0)
+        {
+            axisX = moveAction.ReadValue<Vector2>().x;
+            if (moveAction.ReadValue<Vector2>().y != 0)
+            {
+                axisX = 0;
+                axisY = moveAction.ReadValue<Vector2>().y;
+            }
+        }
+        if (axisX == 0)
+        {
+            axisY = moveAction.ReadValue<Vector2>().y;
+            if (moveAction.ReadValue<Vector2>().x != 0)
+            {
+                axisY = 0;
+                axisX = moveAction.ReadValue<Vector2>().x;
+            }
+        }
+        
         
     }
 
