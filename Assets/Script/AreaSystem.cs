@@ -4,11 +4,7 @@ using UnityEngine.UIElements;
 
 public class AreaSystem : MonoBehaviour
 {
-    //enpty objectにつける
-    //エリア番号に応じたカメラの移動範囲の制御ができるスクリプト
-
     public static int areaNum = 1;
-
 
     public static float camRight = 0.0f;
     public static float camLeft = 0.0f;
