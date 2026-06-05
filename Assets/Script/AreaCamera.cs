@@ -10,6 +10,5 @@ public class AreaCamera : MonoBehaviour
         CameraPosY = Mathf.Clamp(transform.position.y, AreaSystem.camDown + AreaSystem.AreaCenter.y, AreaSystem.camTop + AreaSystem.AreaCenter.y);
 
         Camera.main.transform.position = new Vector3(CameraPosX, CameraPosY, -10);
-
     }
 }
