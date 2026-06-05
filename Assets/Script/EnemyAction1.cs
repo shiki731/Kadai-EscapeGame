@@ -1,11 +1,10 @@
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class EnemyMove : MonoBehaviour
+public class EnemyAction1 : MonoBehaviour
 {
     public Transform PlayerPos;
     private float angle;
-    private float speed = 5.0f;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -17,14 +16,7 @@ public class EnemyMove : MonoBehaviour
     void Update()
     {
         angle = PlayerSearch(transform.position,PlayerPos.transform.position);
-        if(angle >= 0)
-        {
-            transform.Translate(Vector2.right * speed * Time.deltaTime);
-        }
-        else if(angle < 0)
-        {
-            transform.Translate(Vector2.left * speed * Time.deltaTime);
-        }
+        
     }
 
     private float PlayerSearch(Vector2 enePos, Vector2 plaPos)
