@@ -7,8 +7,9 @@ public class EnemyMove : MonoBehaviour
     public Transform PlayerPos;
     private float angle;
     private float speed = 3.0f;
-    // private float dx;
-    // private float dy;
+    private float dx;
+    private float dy;
+    private bool WallTouch = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -18,11 +19,27 @@ public class EnemyMove : MonoBehaviour
 
     private float PlayerSearch(Vector2 enePos, Vector2 plaPos)
     {
-        float dx = enePos.x - plaPos.x;
-        float dy = enePos.y - plaPos.y;
+        dx = enePos.x - plaPos.x;
+        dy = enePos.y - plaPos.y;
         float direction = Mathf.Atan2(dy, dx);
         return direction * Mathf.Rad2Deg;
 
+    }
+
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Wall")
+        {
+            WallTouch = true;
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Wall")
+        {
+            WallTouch = false;
+        }
     }
 
     // Update is called once per frame
@@ -60,11 +77,26 @@ public class EnemyMove : MonoBehaviour
             Debug.Log("lefDo");
             if (angle >= 0 && angle <= 45)
             {
-                transform.Translate(Vector2.left * speed * Time.deltaTime);
+                if (WallTouch == true && dy >= 0)
+                {
+                    transform.Translate(Vector2.down * speed * Time.deltaTime);
+                }
+                else
+                {
+                    transform.Translate(Vector2.left * speed * Time.deltaTime);
+                }
             }
             else if (angle >= 45 && angle <= 90)
             {
-                transform.Translate(Vector2.down * speed * Time.deltaTime);
+                if(WallTouch == true && dy >= 0)
+                {
+                    transform.Translate(Vector2.left * speed * Time.deltaTime);
+                }
+                else
+                {
+                    transform.Translate(Vector2.down * speed * Time.deltaTime);
+                }
+                
             }
         }
         //‰E‰º
@@ -106,11 +138,5 @@ public class EnemyMove : MonoBehaviour
                 transform.Translate(Vector2.right * speed * Time.deltaTime);
             }
         }
-
-
-
-
     }
-
-    
 }
