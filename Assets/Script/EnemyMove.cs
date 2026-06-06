@@ -6,6 +6,7 @@ public class EnemyMove : MonoBehaviour
     public Transform PlayerPos;
     private float angle;
     private float speed = 5.0f;
+    public bool LefDowm;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -17,14 +18,60 @@ public class EnemyMove : MonoBehaviour
     void Update()
     {
         angle = PlayerSearch(transform.position,PlayerPos.transform.position);
-        if(angle >= 0)
+        //transform.rotation = Quaternion.Euler(0, 0, angle);
+
+        //¶‰º
+        if (angle >= 0 && angle < 90)
         {
-            transform.Translate(Vector2.right * speed * Time.deltaTime);
+            if (transform.position.x < PlayerPos.transform.position.x)
+            {
+                transform.Translate(Vector2.down * speed * Time.deltaTime);
+            }
+            else
+            {
+                transform.Translate(Vector2.left * speed * Time.deltaTime);
+            }
         }
-        else if(angle < 0)
+        //‰E‰º
+        else if (angle >= 90 && angle < 180)
         {
-            transform.Translate(Vector2.left * speed * Time.deltaTime);
+            if (transform.position.x > PlayerPos.transform.position.x)
+            {
+                transform.Translate(Vector2.down * speed * Time.deltaTime);
+            }
+            else
+            {
+                transform.Translate(Vector2.right * speed * Time.deltaTime);
+            }
         }
+        //¶ã
+        else if (angle >= -90 && angle < 0)
+        {
+            if (transform.position.x > PlayerPos.transform.position.x)
+            {
+                transform.Translate(Vector2.up * speed * Time.deltaTime);
+            }
+            else
+            {
+                transform.Translate(Vector2.left * speed * Time.deltaTime);
+            }
+        }
+        //‰Eã
+        else if (angle >= -180 && angle < -90)
+        {
+            if (transform.position.x > PlayerPos.transform.position.x)
+            {
+                transform.Translate(Vector2.up * speed * Time.deltaTime);
+            }
+            else
+            {
+                transform.Translate(Vector2.right * speed * Time.deltaTime);
+            }
+        }
+
+
+
+
     }
 
     private float PlayerSearch(Vector2 enePos, Vector2 plaPos)
