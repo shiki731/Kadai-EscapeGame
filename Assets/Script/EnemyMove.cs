@@ -6,15 +6,14 @@ public class EnemyMove : MonoBehaviour
 {
     public Transform PlayerPos;
     private float angle;
-    private float speed = 3.0f;
+    private float speed = 5.0f;
     private float dx;
     private float dy;
-    private bool WallTouch = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-
+        transform.position = new Vector2(100, 100);
     }
 
     private float PlayerSearch(Vector2 enePos, Vector2 plaPos)
@@ -24,22 +23,6 @@ public class EnemyMove : MonoBehaviour
         float direction = Mathf.Atan2(dy, dx);
         return direction * Mathf.Rad2Deg;
 
-    }
-
-    private void OnCollisionStay2D(Collision2D collision)
-    {
-        if (collision.gameObject.tag == "Wall")
-        {
-            WallTouch = true;
-        }
-    }
-
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        if (collision.gameObject.tag == "Wall")
-        {
-            WallTouch = false;
-        }
     }
 
     // Update is called once per frame
@@ -53,90 +36,142 @@ public class EnemyMove : MonoBehaviour
         //¶
         if (angle == 0) 
         {
+            if (CollisionCheck.leftCheck == true) return;
             transform.Translate(Vector2.left * speed * Time.deltaTime);
         }
         //‰º
         else if (angle == 90)
         {
+            if (CollisionCheck.dowCheck == true) return;
             transform.Translate(Vector2.down * speed * Time.deltaTime);
         }
         //‰E
         else if (angle == 180 || angle == -180)
         {
+            if (CollisionCheck.rightCheck == true) return;
             transform.Translate(Vector2.right * speed * Time.deltaTime);
         }
         //ã
         else if (angle == -90)
         {
+            if (CollisionCheck.topCheck == true) return;
             transform.Translate(Vector2.up * speed * Time.deltaTime);
         }
 
         //¶‰º
-        else if (angle > 0 && angle < 90)
+        else if (angle >= 0 && angle <= 90)
         {
-            Debug.Log("lefDo");
-            if (angle >= 0 && angle <= 45)
+            //Debug.Log("lefDo");
+            if (CollisionCheck.leftCheck == true) 
             {
-                if (WallTouch == true && dy >= 0)
-                {
-                    transform.Translate(Vector2.down * speed * Time.deltaTime);
-                }
-                else
-                {
-                    transform.Translate(Vector2.left * speed * Time.deltaTime);
-                }
+                if (CollisionCheck.dowCheck == true) return;
+                transform.Translate(Vector2.down * speed * Time.deltaTime);
             }
-            else if (angle >= 45 && angle <= 90)
+            else if (CollisionCheck.dowCheck == true)
             {
-                if(WallTouch == true && dy >= 0)
+                if (CollisionCheck.leftCheck == true) return;
+                transform.Translate(Vector2.left * speed * Time.deltaTime);
+            }
+            else
+            {
+                if (angle >= 0 && angle <= 45)
                 {
+                    if (CollisionCheck.leftCheck == true) return;
                     transform.Translate(Vector2.left * speed * Time.deltaTime);
                 }
-                else
+                else if (angle >= 45 && angle <= 90)
                 {
+                    if (CollisionCheck.dowCheck == true) return;
                     transform.Translate(Vector2.down * speed * Time.deltaTime);
                 }
-                
             }
         }
         //‰E‰º
-        else if (angle > 90 && angle < 180)
+        else if (angle >= 90 && angle <= 180)
         {
-            Debug.Log("rigDo");
-            if (angle >= 90 && angle <= 135)
+            //Debug.Log("rigDo");
+            if (CollisionCheck.rightCheck == true)
             {
+                if (CollisionCheck.dowCheck == true) return;
                 transform.Translate(Vector2.down * speed * Time.deltaTime);
             }
-            else if (angle >= 135 && angle <= 180)
+            else if (CollisionCheck.dowCheck == true)
             {
+                if (CollisionCheck.rightCheck == true) return;
                 transform.Translate(Vector2.right * speed * Time.deltaTime);
             }
+            else
+            {
+                if (angle >= 90 && angle <= 135)
+                {
+                    if (CollisionCheck.dowCheck == true) return;
+                    transform.Translate(Vector2.down * speed * Time.deltaTime);
+                }
+                else if (angle >= 135 && angle <= 180)
+                {
+                    if (CollisionCheck.rightCheck == true) return;
+                    transform.Translate(Vector2.right * speed * Time.deltaTime);
+                }
+            }
+            
         }
         //¶ã
-        else if (angle > -90 && angle < 0)
+        else if (angle >= -90 && angle <= 0)
         {
-            Debug.Log("lefUp");
-            if (angle >= -45 && angle <= 0)
+            //Debug.Log("lefUp");
+            if (CollisionCheck.leftCheck == true)
             {
+                if (CollisionCheck.topCheck == true) return;
                 transform.Translate(Vector2.up * speed * Time.deltaTime);
             }
-            else if (angle >= -90 && angle <= -45)
+            else if (CollisionCheck.topCheck == true)
             {
+                if (CollisionCheck.leftCheck == true) return;
                 transform.Translate(Vector2.left * speed * Time.deltaTime);
             }
+            else
+            {
+                if (angle >= -45 && angle <= 0)
+                {
+                    if (CollisionCheck.topCheck == true) return;
+                    transform.Translate(Vector2.up * speed * Time.deltaTime);
+                }
+                else if (angle >= -90 && angle <= -45)
+                {
+                    if (CollisionCheck.leftCheck == true) return;
+                    transform.Translate(Vector2.left * speed * Time.deltaTime);
+                }
+            }
+            
         }
         //‰Eã
-        else if (angle > -180 && angle < -90)
+        else if (angle >= -180 && angle <= -90)
         {
-            Debug.Log("rigUp");
-            if (angle >= -135 && angle <= -90)
+            //Debug.Log("rigUp");
+            if (CollisionCheck.rightCheck == true)
             {
+                if (CollisionCheck.topCheck == true) return;
                 transform.Translate(Vector2.up * speed * Time.deltaTime);
             }
-            else if (angle >= -180 && angle <= -135)
+            else if(CollisionCheck.topCheck == true)
             {
+                if (CollisionCheck.rightCheck == true) return;
                 transform.Translate(Vector2.right * speed * Time.deltaTime);
             }
+            else
+            {
+                if (angle >= -135 && angle <= -90)
+                {
+                    if (CollisionCheck.topCheck == true) return;
+                    transform.Translate(Vector2.up * speed * Time.deltaTime);
+                }
+                else if (angle >= -180 && angle <= -135)
+                {
+                    if (CollisionCheck.rightCheck == true) return;
+                    transform.Translate(Vector2.right * speed * Time.deltaTime);
+                }
+            }
+            
         }
     }
 }
