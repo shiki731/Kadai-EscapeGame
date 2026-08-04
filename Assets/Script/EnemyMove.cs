@@ -6,14 +6,14 @@ public class EnemyMove : MonoBehaviour
 {
     public Transform PlayerPos;
     private float angle;
-    private float speed = 5.0f;
+    private float speed = 8.0f;
     private float dx;
     private float dy;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        transform.position = new Vector2(100, 100);
+        // transform.position = new Vector2(100, 100);
     }
 
     private float PlayerSearch(Vector2 enePos, Vector2 plaPos)
